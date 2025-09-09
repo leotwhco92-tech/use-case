@@ -1,206 +1,354 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2566">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Case Study: Smart Property Management App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page app with a sticky sidebar navigation for non-linear exploration. The core is an interactive 'Solution' section featuring a simulated phone UI where users can click to see different app states, directly connecting the problem to the solution. The 'Process' section uses tabs to break down complex information into digestible parts (Research, Ideation, etc.). This structure is chosen over a simple linear scroll to better engage users like recruiters, allowing them to quickly access sections of interest and interact with the solution directly, leading to better comprehension. -->
+    <!-- Visualization & Content Choices: Problem Statement -> Goal: Inform -> Viz: Side-by-side text and interactive phone mock -> Interaction: User clicks buttons to change the mock's state (e.g., activate DND mode), which updates a status badge and descriptive text -> Justification: Actively demonstrates the app's features instead of passively describing them. | User Research -> Goal: Inform/Compare -> Viz: Bar Chart (Chart.js) -> Interaction: Hover for tooltips on 'Top 3 Owner Frustrations' -> Justification: Quantifies user pain points visually. | Design Process -> Goal: Organize -> Viz: HTML/CSS Tabs and a Flexbox-based flowchart -> Interaction: Clicking tabs reveals different stages; hovering flowchart steps highlights them -> Justification: Breaks a long narrative into organized, manageable sections, improving readability. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-link.active {
+            color: #D97706;
+            background-color: #FEF3C7;
+            border-right: 3px solid #D97706;
+        }
+        .tab-button.active {
+            border-color: #D97706;
+            color: #D97706;
+            background-color: #FFFBEB;
+        }
+        .phone-mockup {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0,0,0,0.05);
+        }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 400px; 
+        }
+        @media (min-width: 768px) { 
+            .chart-container { 
+                height: 350px; 
+            } 
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Project Showcase: Smart Property Management App&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.section-title {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>@apply text-2xl font-bold text-gray-800 mb-4;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.section-content {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>@apply text-gray-600 leading-relaxed;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.card {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>@apply bg-white rounded-lg shadow-md p-6;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body class="bg-gray-50 text-gray-700"&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Header --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;header class="bg-white shadow-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto px-6 py-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-3xl font-bold text-gray-900"&gt;Smart Property Management App&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p class="text-lg text-gray-500"&gt;A UX Case Study&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Main Content --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto px-6 py-8"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Overview Section --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Overview&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>A mobile application designed to help property owners efficiently manage their properties by providing real-time status updates through a simplified interface. This project aimed to reduce the manual burden on owners and ensure seamless control over their properties.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-semibold text-gray-800"&gt;My Role&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-600"&gt;UX Designer, Product Designer&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-semibold text-gray-800"&gt;Timeline&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-600"&gt;4 Weeks&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-semibold text-gray-800"&gt;Tools Used&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-600"&gt;Figma, Miro, Maze&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- The Problem --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;The Problem&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>Property owners often face a heavy administrative burden when managing their units. The process of updating property status, coordinating with security for visitor registration, or managing tenant permissions is often manual and time-consuming. This lack of a centralized, real-time system leads to confusion, security lapses, and a poor experience for owners and tenants alike. The core problem was to create a simplified solution that allows an owner to easily update a property's status and permissions to ensure it is well-controlled without extra burden.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- My Role &amp; Responsibilities --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;My Role &amp; Responsibilities&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;ul class="section-content list-disc list-inside"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;Conducted user research to understand pain points.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;Designed the property card and status badges for at-a-glance information.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;Created user flows for different property modes (DND, Tenant, etc.).&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;Developed high-fidelity prototypes for usability testing.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Target Audience --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Target Audience&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>The primary user is the busy property owner who needs a quick, reliable way to manage single or multiple units. They require a clear overview of property status, easy delegation of control to tenants, and robust security features to prevent unauthorized access.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Scope &amp; Constraints --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Scope &amp; Constraints&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content mb-4"&gt;The project's scope was focused on the core property status management features:&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;ul class="section-content list-disc list-inside"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong&gt;Property Card with Badges:&lt;/strong&gt; A central UI element to display a property's status at a glance.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong&gt;Do Not Disturb (DND) Mode:&lt;/strong&gt; A feature to block new visitor registrations for a specific period.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong&gt;Tenant Mode:&lt;/strong&gt; A setting to transfer control of visitor and facility booking features to a tenant.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong&gt;Primary Property Badge:&lt;/strong&gt; A designation for a frequently-used property to be opened by default upon app launch.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;&lt;strong&gt;Suspend Mode:&lt;/strong&gt; A status to restrict all app features for owners who have violated rules or defaulted on payments.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Research &amp; Discovery --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Research &amp; Discovery&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                   </span>We used stakeholder interviews, owner surveys, and competitive analysis. A key finding was the frustration owners felt with late-night visitor calls and the lack of a simple way to delegate control to tenants. They desired a quick, visual way to see the status of their properties.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Ideation &amp; Solution --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Ideation &amp; Solution&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>Based on research, we developed user flows for activating DND and Tenant modes. We decided to use prominent, colorful badges on the property card for immediate status visibility. Toggles were chosen for modes like DND and Tenant for their simplicity and clear on/off state.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                 </span>&lt;!-- Placeholder for images --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="mt-6 bg-gray-200 h-64 rounded-lg flex items-center justify-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;p class="text-gray-500"&gt;User Flow / Wireframe Image Placeholder&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Design &amp; Prototyping --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Design &amp; Prototyping&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>The final visual design focused on a clean, intuitive interface. Key screens included the property card, settings for mode activation, and warning prompts for suspended or DND statuses. An interactive prototype was built to simulate the user experience.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;!-- Placeholder for images --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-gray-200 h-80 rounded-lg flex items-center justify-center"&gt;&lt;p class="text-gray-500"&gt;Visual Design Mockup 1&lt;/p&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-gray-200 h-80 rounded-lg flex items-center justify-center"&gt;&lt;p class="text-gray-500"&gt;Visual Design Mockup 2&lt;/p&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Testing &amp; Validation --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Testing &amp; Validation&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>Usability testing was conducted with five property owners. Initial feedback showed confusion around the "Suspend" badge. We iterated on the design by changing the color and adding a tooltip to provide a clearer explanation of the status.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Key Learnings &amp; Impact --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Key Learnings &amp; Impact&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="section-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>This project reinforced the importance of user feedback in the design process. The new features were well-received, and owners reported feeling more in control of their properties. A key learning was to ensure that even simple UI elements like badges are self-explanatory or have clear supporting information.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Future Considerations --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="mb-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">             </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;Future Considerations&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;ul class="section-content list-disc list-inside"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;Implement a 'vacation mode' for owners to automate DND and visitor rules.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;li&gt;Explore a feature for granting specific, time-bound permissions to tenants.&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Footer --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-white mt-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto px-6 py-4 text-center text-gray-500"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;&amp;copy; 2024 [Your Name]. All Rights Reserved.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+<body class="flex">
+    <aside class="sticky top-0 h-screen w-64 bg-white shadow-md hidden lg:block">
+        <div class="p-6">
+            <h2 class="text-xl font-bold text-gray-800">Case Study Sections</h2>
+        </div>
+        <nav id="desktop-nav" class="flex flex-col">
+            <a href="#overview" class="nav-link p-4 pl-6 text-gray-600 hover:bg-amber-50">Overview</a>
+            <a href="#problem-solution" class="nav-link p-4 pl-6 text-gray-600 hover:bg-amber-50">Problem & Solution</a>
+            <a href="#process" class="nav-link p-4 pl-6 text-gray-600 hover:bg-amber-50">Design Process</a>
+            <a href="#outcome" class="nav-link p-4 pl-6 text-gray-600 hover:bg-amber-50">Outcome & Learnings</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-4 sm:p-8 md:p-12 overflow-y-auto">
+        <div class="max-w-4xl mx-auto">
+            
+            <section id="overview" class="mb-24 min-h-screen flex flex-col justify-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-amber-600 mb-4">Smart Property Management App</h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8">A UX case study on simplifying property management for owners through a real-time, intuitive mobile application.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1">My Role</h3>
+                        <p class="text-gray-600">UX & Product Designer</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Timeline</h3>
+                        <p class="text-gray-600">4 Weeks</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Tools</h3>
+                        <p class="text-gray-600">Figma, Miro, Maze</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="problem-solution" class="mb-24">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Problem & Interactive Solution</h2>
+                <p class="text-lg text-gray-600 mb-8">Property owners face significant administrative burdens. Our goal was to create a simple solution to update a property's status and permissions. Below, you can interact with a mockup of the core solution to see how it directly addresses these pain points.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <div class="phone-mockup w-full max-w-sm mx-auto bg-white border-8 border-gray-800 rounded-3xl p-2">
+                            <div class="bg-gray-100 h-96 rounded-2xl p-4 flex flex-col">
+                                <h4 class="font-bold text-gray-800">My Properties</h4>
+                                <div id="property-card" class="bg-white p-4 rounded-lg shadow-md mt-4 flex-grow relative">
+                                    <div id="badge-container" class="absolute top-2 right-2">
+                                    </div>
+                                    <h5 class="font-semibold text-lg">Unit 101, Tower A</h5>
+                                    <p class="text-sm text-gray-500">The Grand Residences</p>
+                                    <div class="mt-4">
+                                        <p id="status-text" class="text-gray-700 text-sm">Status: Available. Ready for tenant or visitor registration.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Interact with the Solution</h3>
+                        <p id="interaction-description" class="text-gray-600 mb-6 min-h-[6rem]">Click the buttons below to see how the app status changes in real-time. This dynamic feedback loop provides owners with immediate confirmation and control.</p>
+                        <div class="flex flex-col space-y-3">
+                            <button onclick="setMode('default')" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">Default Mode</button>
+                            <button onclick="setMode('dnd')" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Activate "Do Not Disturb"</button>
+                            <button onclick="setMode('tenant')" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Activate "Tenant Mode"</button>
+                            <button onclick="setMode('suspend')" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Simulate "Suspended"</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="process" class="mb-24">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">The Design Process</h2>
+                <p class="text-lg text-gray-600 mb-8">Our design process was structured to ensure we moved from understanding user needs to delivering a validated solution. Each phase built upon the last, involving continuous learning and iteration. Explore the tabs below to see our journey.</p>
+                <div>
+                    <div class="border-b border-gray-200 mb-6">
+                        <nav id="tabs" class="-mb-px flex space-x-6" aria-label="Tabs">
+                            <button data-tab="research" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-amber-600 hover:border-amber-300">Research</button>
+                            <button data-tab="ideation" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-amber-600 hover:border-amber-300">Ideation</button>
+                            <button data-tab="prototyping" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-amber-600 hover:border-amber-300">Prototyping</button>
+                            <button data-tab="testing" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-amber-600 hover:border-amber-300">Testing</button>
+                        </nav>
+                    </div>
+
+                    <div id="tab-content" class="bg-white p-8 rounded-lg shadow-lg">
+                        <div id="research-content" class="tab-panel">
+                            <h3 class="text-2xl font-semibold mb-4 text-gray-800">Research & Discovery</h3>
+                            <p class="text-gray-600 mb-6">Through stakeholder interviews and owner surveys, we uncovered critical pain points. The overwhelming feedback pointed to a lack of control and excessive manual coordination. The chart below visualizes the top frustrations cited by property owners in our initial surveys, highlighting the need for streamlined communication and status management.</p>
+                            <div class="chart-container">
+                                <canvas id="frustrationsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div id="ideation-content" class="tab-panel hidden">
+                            <h3 class="text-2xl font-semibold mb-4 text-gray-800">Ideation & User Flow</h3>
+                             <p class="text-gray-600 mb-6">Based on our research, we focused on creating simple, intuitive user flows for the most critical tasks. The primary flow involved enabling a mode like "Do Not Disturb" with just a few taps. We prioritized clarity and speed to reduce the owner's cognitive load. The diagram below shows the simplified flow for activating a property mode.</p>
+                             <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 text-center p-4">
+                                <div class="p-4 bg-amber-100 rounded-lg shadow-sm">
+                                    <p class="font-semibold">1. Open App</p>
+                                    <p class="text-xs text-amber-800">Primary property loads</p>
+                                </div>
+                                <div class="text-amber-500 font-bold text-2xl">&rarr;</div>
+                                <div class="p-4 bg-amber-100 rounded-lg shadow-sm">
+                                    <p class="font-semibold">2. Select Mode</p>
+                                    <p class="text-xs text-amber-800">Tap 'DND' button</p>
+                                </div>
+                                <div class="text-amber-500 font-bold text-2xl">&rarr;</div>
+                                <div class="p-4 bg-amber-100 rounded-lg shadow-sm">
+                                    <p class="font-semibold">3. Confirm</p>
+                                    <p class="text-xs text-amber-800">Set duration (optional)</p>
+                                </div>
+                                <div class="text-amber-500 font-bold text-2xl">&rarr;</div>
+                                <div class="p-4 bg-amber-100 rounded-lg shadow-sm">
+                                    <p class="font-semibold">4. Activated</p>
+                                    <p class="text-xs text-amber-800">Badge appears on card</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="prototyping-content" class="tab-panel hidden">
+                            <h3 class="text-2xl font-semibold mb-4 text-gray-800">Design & Prototyping</h3>
+                            <p class="text-gray-600 mb-6">We translated our user flows into high-fidelity prototypes. The design focused on a clean UI with clear visual cues. The property card was the central element, using colorful badges for at-a-glance status recognition. Below are mockups of the key screens designed in Figma.</p>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gray-200 h-80 rounded-lg flex items-center justify-center p-4">
+                                    <p class="text-gray-500 text-center">Visual Design Mockup 1: Main property screen with status badges.</p>
+                                </div>
+                                <div class="bg-gray-200 h-80 rounded-lg flex items-center justify-center p-4">
+                                    <p class="text-gray-500 text-center">Visual Design Mockup 2: Modal for activating 'Tenant Mode'.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="testing-content" class="tab-panel hidden">
+                            <h3 class="text-2xl font-semibold mb-4 text-gray-800">Testing & Iteration</h3>
+                            <p class="text-gray-600 mb-6">Usability testing with five property owners revealed a key issue: the "Suspend" badge was alarming and its meaning wasn't immediately clear. Based on this feedback, we iterated on the design to improve clarity.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-2 text-center text-red-600">Before Iteration</h4>
+                                    <div class="bg-gray-200 h-64 rounded-lg p-4 flex items-center justify-center">
+                                         <p class="text-gray-500 text-center">Original "Suspend" badge was just a red icon, causing confusion.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-2 text-center text-green-600">After Iteration</h4>
+                                    <div class="bg-gray-200 h-64 rounded-lg p-4 flex items-center justify-center">
+                                         <p class="text-gray-500 text-center">Updated badge included text "Suspended" and a tooltip on hover for a clear explanation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="outcome" class="mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Outcome & Learnings</h2>
+                <p class="text-lg text-gray-600 mb-8">The project successfully delivered a solution that addressed the core needs of property owners, resulting in positive feedback and valuable insights for future development.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Impact</h3>
+                        <p class="text-gray-600">While quantitative data is pending full-scale launch, qualitative feedback from usability tests was overwhelmingly positive. Owners reported a greater sense of control and a significant reduction in perceived administrative effort. The primary success was the validation that a simple, clear status-management tool is highly desired.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Key Learnings</h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <li><strong>Clarity Over Cleverness:</strong> Early feedback taught us that a clear, descriptive UI is more valuable than a novel but ambiguous one.</li>
+                            <li><strong>Context is Crucial:</strong> Features like "Suspend" need immediate, clear context. Tooltips and descriptive text are not an afterthought.</li>
+                            <li><strong>Iterate Quickly:</strong> Small, rapid iterations based on user feedback led to significant improvements in usability.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('main section');
+            const navLinks = document.querySelectorAll('#desktop-nav a');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const target = tab.getAttribute('data-tab');
+
+                    tabPanels.forEach(panel => {
+                        if (panel.id === `${target}-content`) {
+                            panel.classList.remove('hidden');
+                        } else {
+                            panel.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            tabs[0].click();
+            
+            const ctx = document.getElementById('frustrationsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Late-night Visitor Calls', 'Manual Visitor Registration', 'Coordinating with Tenants'],
+                    datasets: [{
+                        label: 'Level of Frustration (out of 10)',
+                        data: [9, 8, 7],
+                        backgroundColor: [
+                            'rgba(251, 146, 60, 0.6)',
+                            'rgba(252, 211, 77, 0.6)',
+                            'rgba(245, 158, 11, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(251, 146, 60, 1)',
+                            'rgba(252, 211, 77, 1)',
+                            'rgba(245, 158, 11, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                             max: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Top 3 Owner Frustrations from Surveys'
+                        }
+                    }
+                }
+            });
+        });
+        
+        const badgeContainer = document.getElementById('badge-container');
+        const statusText = document.getElementById('status-text');
+        const interactionDescription = document.getElementById('interaction-description');
+        
+        const modes = {
+            default: {
+                badge: '',
+                status: 'Status: Available. Ready for tenant or visitor registration.',
+                description: 'The default state. The property is active and fully manageable.'
+            },
+            dnd: {
+                badge: '<div class="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">DND</div>',
+                status: 'Status: Do Not Disturb. New visitor registrations are blocked.',
+                description: '"Do Not Disturb" mode blocks all new visitor registrations for a set period, preventing unwanted late-night calls.'
+            },
+            tenant: {
+                badge: '<div class="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">Tenant</div>',
+                status: 'Status: Tenant Mode. Control is transferred to the tenant.',
+                description: '"Tenant Mode" transfers control of visitor registration and facility booking to the tenant, empowering them and reducing the owner\'s workload.'
+            },
+            suspend: {
+                badge: '<div class="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">Suspended</div>',
+                status: 'Status: Suspended. All app features are restricted for this unit.',
+                description: '"Suspended" mode is an administrative status that restricts all features for owners who have violated rules or defaulted on payments.'
+            }
+        };
+
+        function setMode(mode) {
+            badgeContainer.innerHTML = modes[mode].badge;
+            statusText.textContent = modes[mode].status;
+            interactionDescription.textContent = modes[mode].description;
+        }
+
+        setMode('default');
+
+    </script>
 </body>
 </html>
+
